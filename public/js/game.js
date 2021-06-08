@@ -27,7 +27,6 @@ function preload() {
     this.load.image('logo', 'assets/sprites/phaser3-logo.png');
     this.load.image('red', 'assets/particles/red.png');
     this.load.image('florian', 'https://media-exp3.licdn.com/dms/image/C4E03AQHvWhq-8o5crw/profile-displayphoto-shrink_800_800/0/1584003262799?e=1628726400&v=beta&t=G4jGW_pnbiv7NhaQWa0jar8RJasm-EsvMIbeqeWc7A4');
-    this.load;
 }
 function create() {
     this.add.image(400, 300, 'sky');
