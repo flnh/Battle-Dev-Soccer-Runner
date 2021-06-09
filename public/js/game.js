@@ -6,7 +6,6 @@ var blocksVelocity;
 var player;
 var keyboard;
 var tabBlocks;
-var nbBlocks;
 var config = {
     type: Phaser.AUTO,
     scale: {
@@ -32,19 +31,21 @@ var game = new Phaser.Game(config);
 function preload() {
     this.load.image('gradin', '/assets/gradin_bg.png');
     this.load.image('main', '/assets/main_bg.png');
-    this.load.image('stairs', '/assets/stairs_bg.png');
+    this.load.image('stair_debut', '/assets/stair_debut.png');
     this.load.spritesheet('player', '/assets/player.png', {
         frameWidth: 46,
         frameHeight: 57
     });
+    this.load.image('stair_suite', '/assets/stair_suite.png');
 }
 function create() {
     initializeVariables();
-    var startGradin = this.add.image(widthGame / 2, heightGame / 2 * nbBlocks, 'main');
+    var startGradin = this.add.image(widthGame / 2, heightGame / 2, 'main');
     startGradin.displayWidth = widthGame;
     startGradin.displayHeight = heightGame;
-    var stairs = this.add.image(widthGame / 2, 225 * nbBlocks, 'stairs');
-    stairs.displayHeight = 450;
+    var stairs = this.add.image(widthGame / 2, 140, 'stair_debut');
+    stairs.displayHeight = heightGame + 25;
+    stairs.displayWidth = 266;
     var startBlock = this.physics.add.group([startGradin, stairs]);
     startBlock.setVelocityY(blocksVelocity);
     tabBlocks = [startBlock];
@@ -93,7 +94,6 @@ function update() {
     verifyBlocks(this);
 }
 function initializeVariables() {
-    nbBlocks = 1;
     widthGame = 800;
     heightGame = 600;
     blocksVelocity = 80;
@@ -116,10 +116,10 @@ function createNextBlock(scene) {
     gradin.displayWidth = widthGame;
     gradin.displayHeight = heightGame;
     // @ts-ignore
-    var stairs = scene.add.image(widthGame / 2, tabBlocks[0].children.entries[0].y + heightGame * -tabBlocks.length, 'stairs');
-    stairs.displayHeight = heightGame;
+    var stairs = scene.add.image(widthGame / 2, tabBlocks[0].children.entries[0].y + heightGame * -tabBlocks.length, 'stair_suite');
+    stairs.displayHeight = heightGame + 25;
+    stairs.displayWidth = 266;
     var block = scene.physics.add.group([gradin, stairs]);
     block.setVelocityY(blocksVelocity);
     tabBlocks.push(block);
-    nbBlocks++;
 }
