@@ -40,8 +40,8 @@ function preload (this: Phaser.Scene)
   this.load.image('main', '/assets/main_bg.png')
   this.load.image('stairs', '/assets/stairs_bg.png')
   this.load.spritesheet('player', '/assets/player.png', {
-    frameWidth: 32,
-    frameHeight: 48
+    frameWidth: 45,
+    frameHeight: 55
   })
 }
 
