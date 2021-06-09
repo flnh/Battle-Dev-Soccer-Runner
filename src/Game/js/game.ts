@@ -40,8 +40,8 @@ function preload (this: Phaser.Scene)
   this.load.image('main', '/assets/main_bg.png')
   this.load.image('stairs', '/assets/stairs_bg.png')
   this.load.spritesheet('player', '/assets/player.png', {
-    frameWidth: 45,
-    frameHeight: 55
+    frameWidth: 44,
+    frameHeight: 57
   })
 }
 
@@ -67,15 +67,46 @@ function create (this: Phaser.Scene)
   player.setDepth(1)
 
   keyboard = this.input.keyboard.createCursorKeys()
+
+  this.anims.create({
+    key: 'died',
+    frames: [{key: 'player', frame: 0}],
+    frameRate: 20
+  })
+
+  this.anims.create({
+    key: 'left',
+    frames: [{key: 'player', frame: 3}],
+    frameRate: 20
+  })
+
+  this.anims.create({
+    key: 'right',
+    frames: [{key: 'player', frame: 2}],
+    frameRate: 20
+  })
+
+  this.anims.create({
+    key: 'run',
+    frames: this.anims.generateFrameNumbers('player', {
+      start: 0,
+      end: 1
+    }),
+    frameRate: 5,
+    repeat: -1
+  })
 }
 
 function update(this: Phaser.Scene) {
   if (keyboard.left.isDown) {
     player.setVelocityX(-160)
+    player.anims.play('left', true)
   } else if (keyboard.right.isDown) {
     player.setVelocityX(160)
+    player.anims.play('right', true)
   } else {
     player.setVelocityX(0)
+    player.anims.play('run', true)
   }
 
   verifyBlocks(this)
