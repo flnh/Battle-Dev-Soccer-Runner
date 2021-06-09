@@ -3,9 +3,17 @@
 {% block title %}Page d'accueil !{% endblock %}
 
 {% block body %}
-<body style="margin:0">
-    <div id="container" style="overflow:hidden;width:100%;height:100%;"></div>
+<body style="margin:0;background-image:url('/assets-home/wp-green.jpeg')">
+    <div id="container" style="overflow:hidden;width:100%;height:100%;display:none;"></div>
+    <div>
+        <a onclick="document.querySelector('#container').style.display = 'block'" class="waves-effect waves-light btn-large amber lighten-2 play-btn">Jouer !</a>
+    </div>
+
+
+
     <script src="./js/phaser.min.js"></script>
     <script src="./js/game.js"></script>
+    
+
 </body>
 {% endblock %}
