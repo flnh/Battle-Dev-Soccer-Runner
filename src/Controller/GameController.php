@@ -24,7 +24,7 @@ class GameController extends AbstractController
     /**
      * @Route("/form", name="game")
      */
-    public function form(Request $request, EntityManagerInterface $entityManager): Response
+    public function form(Request $request, EntityManagerInterface $entityManager, \Swift_Mailer $mailer): Response
     {
         $target = new Target();
         
@@ -35,7 +35,23 @@ class GameController extends AbstractController
             $target->setToken(md5(uniqid()));
             $entityManager->persist($target);
             $entityManager->flush();
-            // dump($target);
+            $contact = $form->getData()->getEmail();
+            $message = (new \Swift_Message('Nouvel inscrit'))
+                // On attribue l'expéditeur
+                ->setFrom($contact)
+                // On attribue le destinataire
+                ->setTo('lyskawaaude@gmail.com')
+                // On crée le texte avec la vue
+                ->setBody(
+                    $this->renderView(
+                        'game/contact.html.twig', compact('contact')
+                    ),
+                    'text/html'
+                )
+            ;
+            $mailer->send($message);
+            $this->addFlash('success', 'Votre inscription a bien été prise en compte !');
+            // dump($message);
         }
 
         return $this->render('game/form.html.twig', [

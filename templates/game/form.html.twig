@@ -1,30 +1,82 @@
+{% extends 'base.html.twig' %}
+
 {% block body %}
-      {{ form_start(form) }}
-        {{ form_label(form.firstName) }}
-        {{ form_widget(form.firstName) }}
-   
-        {{ form_label(form.lastName) }}
-        {{ form_widget(form.lastName) }}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Modal
+</button>
 
-        {{ form_label(form.pseudo) }}
-        {{ form_widget(form.pseudo) }}
-
-        {{ form_label(form.email) }}
-        {{ form_widget(form.email) }}
-
-        {{ form_label(form.age) }}
-        {{ form_widget(form.age) }}
-
-        {{ form_label(form.sex) }}
-        {{ form_widget(form.sex) }}
-
-        {{ form_label(form.familyComposition) }}
-        {{ form_widget(form.familyComposition) }}
-
-        {{ form_label(form.hobbies) }}
-        {{ form_widget(form.hobbies) }}
-
-        {{ form_rest(form) }}
-        <button type="submit">Enregistrer</button>
-    {{ form_end(form) }}
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Jeu concours</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success">
+            {{ message }}
+          </div>
+        {% endfor %}
+        {{ form_start(form) }}
+        <div class="row mb-4">
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.firstName, 'Prénom') }}
+                {{ form_widget(form.firstName, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.lastName, 'Nom') }}
+                {{ form_widget(form.lastName, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.pseudo, 'Pseudo') }}
+                {{ form_widget(form.pseudo, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.age, 'Age') }}
+                {{ form_widget(form.age, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+        </div>
+        <div class="form-outline mb-4">
+          {{ form_label(form.email, 'Adresse email') }}
+          {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="form-outline mb-4">
+          {{ form_label(form.hobbies, 'Interêt') }}
+          {{ form_widget(form.hobbies, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.sex, 'Sexe') }}
+                {{ form_widget(form.sex, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.familyComposition, 'Famille') }}
+                {{ form_widget(form.familyComposition, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+        {{ form_end(form) }} 
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
+
