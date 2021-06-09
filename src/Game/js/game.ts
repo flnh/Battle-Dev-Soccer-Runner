@@ -40,7 +40,7 @@ function preload (this: Phaser.Scene)
   this.load.image('main', '/assets/main_bg.png')
   this.load.image('stairs', '/assets/stairs_bg.png')
   this.load.spritesheet('player', '/assets/player.png', {
-    frameWidth: 44,
+    frameWidth: 46,
     frameHeight: 57
   })
 }
@@ -92,16 +92,16 @@ function create (this: Phaser.Scene)
       start: 0,
       end: 1
     }),
-    frameRate: 5,
+    frameRate: 4,
     repeat: -1
   })
 }
 
 function update(this: Phaser.Scene) {
-  if (keyboard.left.isDown) {
+  if (keyboard.left.isDown && player.x >= widthGame / 2 - 110) {
     player.setVelocityX(-160)
     player.anims.play('left', true)
-  } else if (keyboard.right.isDown) {
+  } else if (keyboard.right.isDown && player.x <= widthGame / 2 + 110) {
     player.setVelocityX(160)
     player.anims.play('right', true)
   } else {
