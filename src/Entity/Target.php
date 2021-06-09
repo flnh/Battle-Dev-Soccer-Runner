@@ -44,16 +44,19 @@ class Target
      */
     private $age;
 
+    const SEX = ['Homme', 'Femme', 'Ne souhaite pas répondre'];
     /**
      * @ORM\Column(type="string", columnDefinition="enum('Homme', 'Femme', 'Ne souhaite pas répondre')")
      */
     private $sex;
 
+    const FAMILYCOMPOSITION = ['Entre 1 et 2', 'Entre 3 et 4', '4 et plus' ,'Ne souhaite pas répondre'];
     /**
      * @ORM\Column(type="string", columnDefinition="enum('Entre 1 et 2', 'Entre 3 et 4', '4 et plus' ,'Ne souhaite pas répondre')")
      */
     private $familyComposition;
 
+    const HOBBIES = ['Jeux-vidéos', 'Film', 'Séries', 'Musique', 'Sports' ,'Ne souhaite pas répondre'];
     /**
      * @ORM\Column(type="string", columnDefinition="enum('Jeux-vidéos', 'Film', 'Séries', 'Musique', 'Sports' ,'Ne souhaite pas répondre')")
      */
@@ -146,8 +149,10 @@ class Target
 
     public function setSex(string $sex): self
     {
+        if (!in_array($sex, self::SEX)) {
+            throw new \InvalidArgumentException("Invalid sex");
+        }
         $this->sex = $sex;
-
         return $this;
     }
 
@@ -158,6 +163,9 @@ class Target
 
     public function setFamilyComposition(string $familyComposition): self
     {
+        if (!in_array($familyComposition, self::FAMILYCOMPOSITION)) {
+            throw new \InvalidArgumentException("Invalid familyComposition");
+        }
         $this->familyComposition = $familyComposition;
 
         return $this;
@@ -170,6 +178,10 @@ class Target
 
     public function setHobbies(string $hobbies): self
     {
+        if (!in_array($hobbies, self::HOBBIES)) {
+            throw new \InvalidArgumentException("Invalid hobbies");
+        }
+
         $this->hobbies = $hobbies;
 
         return $this;
