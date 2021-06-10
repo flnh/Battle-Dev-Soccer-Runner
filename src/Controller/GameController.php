@@ -42,6 +42,7 @@ class GameController extends AbstractController
             ;
             $mailer->send($message);
             $this->addFlash('success', 'Votre inscription a bien été prise en compte !');
+            return $this->render('game/game-over.html.twig');
             // dump($message);
         }
 

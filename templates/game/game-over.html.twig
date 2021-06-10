@@ -1,0 +1,13 @@
+ {% extends 'base.html.twig' %}
+
+ {% block body %}
+ <div class="container">
+     {% for message in app.flashes('success') %}
+     <div class="alert alert-success">
+         {{ message }}
+     </div>
+     {% endfor %}
+     <img src="/assets-home/render_gameover.png" alt="game_over" class="img-fluid">
+ </div>
+
+ {% endblock %}
