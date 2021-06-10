@@ -1,9 +1,12 @@
 "use strict";
 /// <reference path="../types/phaser.d.ts" />
-(function () {
+var _a;
+(_a = document.querySelector('.btn-play')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', function () {
     var widthGame;
     var heightGame;
     var blocksVelocity;
+    var stepVelocity;
+    var stepIsAugmented;
     var player;
     var keyboard;
     var tabBlocks;
@@ -13,12 +16,12 @@
     var biere;
     var bonus;
     var bonus2;
-    var mainTheme;
-    var nomNom;
     var sifflet;
     var supp1;
-    var supp2;
-    var tirFootball;
+    var messageBlock;
+    var score;
+    var scoreText;
+    var gameIsFinnished;
     var config = {
         type: Phaser.AUTO,
         scale: {
@@ -67,17 +70,18 @@
         this.load.audio('biere', '/assets/sounds/biere.wav');
         this.load.audio('bonus', '/assets/sounds/bonus.wav');
         this.load.audio('bonus2', '/assets/sounds/bonus2.wav');
-        this.load.audio('main_theme', '/assets/sounds/main_theme.wav');
-        this.load.audio('nomnom', '/assets/sounds/nomnom.wav');
         this.load.audio('sifflet', '/assets/sounds/sifflet.mp3');
         this.load.audio('supp1', '/assets/sounds/supp1.mp3');
-        this.load.audio('supp2', '/assets/sounds/supp2.mp3');
-        this.load.audio('tirfootball', '/assets/sounds/tirfootball.wav');
     }
     function create() {
         initializeVariables();
         createAnims(this);
         loadSound(this);
+        var backgroundMessage = this.add.rectangle(400, 0, 800, 50, 0x000000);
+        backgroundMessage.setDepth(5);
+        scoreText = this.add.text(25, 0, 'Score: 0', { fontSize: '28px' });
+        scoreText.setDepth(6);
+        messageBlock = this.add.group(backgroundMessage, scoreText);
         var startGradin = this.add.image(widthGame / 2, heightGame / 2, 'main');
         startGradin.displayWidth = widthGame;
         startGradin.displayHeight = heightGame;
@@ -92,7 +96,11 @@
         keyboard = this.input.keyboard.createCursorKeys();
         spawnSpectators(this, startBlock, true);
         createNextBlock(this);
-        supp1.play({ loop: true, volume: 0.5 });
+        supp1.play({ loop: true, volume: 0.3 });
+        setInterval(function () {
+            incrementScore();
+            incrementVelocity();
+        }, 500);
     }
     function update() {
         if (keyboard.left.isDown && player.x >= widthGame / 2 - 110) {
@@ -122,17 +130,17 @@
         typesSpectators = ['supp_blanc', 'supp_jaune', 'supp_rouge'];
         typesBonus = ['heineken', 'hotdog', 'pizza'];
         typesMalus = ['red_card', 'red_cup_broken'];
+        score = 0;
+        gameIsFinnished = false;
+        stepIsAugmented = false;
+        stepVelocity = 1;
     }
     function loadSound(scene) {
         biere = scene.sound.add('biere');
         bonus = scene.sound.add('bonus');
         bonus2 = scene.sound.add('bonus2');
-        mainTheme = scene.sound.add('main_theme');
-        nomNom = scene.sound.add('nomnom');
         sifflet = scene.sound.add('sifflet');
         supp1 = scene.sound.add('supp1');
-        supp2 = scene.sound.add('supp2');
-        tirFootball = scene.sound.add('tirfootball');
     }
     function verifyBlocks(scene) {
         // @ts-ignore
@@ -200,7 +208,7 @@
     function spawnBolus(scene, block, isStarting) {
         var emplacement = [315, 400, 485];
         for (var i = 0; i < 2; i++) {
-            if (Math.floor(Math.random() * 10) < 5) {
+            if (Math.floor(Math.random() * 10) < 7) {
                 var indexEmplacement = Math.floor(Math.random() * emplacement.length);
                 // @ts-ignore
                 var malusY = isStarting ? tabBlocks[tabBlocks.length - 1].children.entries[0].y + heightGame / 2 : tabBlocks[tabBlocks.length - 1].children.entries[0].y;
@@ -213,7 +221,7 @@
                 scene.physics.add.collider(malus, player, collisionBolus);
             }
         }
-        if (Math.floor(Math.random() * 10) < 3) {
+        if (Math.floor(Math.random() * 10) < 5) {
             var indexEmplacement = Math.floor(Math.random() * emplacement.length);
             // @ts-ignore
             var bonusY = isStarting ? tabBlocks[tabBlocks.length - 1].children.entries[0].y + heightGame / 2 : tabBlocks[tabBlocks.length - 1].children.entries[0].y;
@@ -232,23 +240,46 @@
         switch (hit.frame.texture.key) {
             case 'heineken':
                 biere.play();
+                score += 20;
+                scoreText.setText('Score: ' + score);
                 break;
             case 'hotdog':
                 bonus.play();
+                score += 10;
+                scoreText.setText('Score: ' + score);
                 break;
             case 'pizza':
                 bonus2.play();
+                score += 10;
+                scoreText.setText('Score: ' + score);
                 break;
             case 'red_card':
                 sifflet.play();
+                gameIsFinnished = true;
                 break;
             case 'red_cup_broken':
                 sifflet.play();
+                gameIsFinnished = true;
                 break;
         }
         player.y = 550;
         hit.destroy(true);
         // console.log('bonus')
+    }
+    function incrementScore() {
+        if (!gameIsFinnished) {
+            scoreText.setText('Score: ' + ++score);
+            if (!stepIsAugmented && score >= 75) {
+                stepVelocity = 5;
+                stepIsAugmented = true;
+            }
+        }
+    }
+    function incrementVelocity() {
+        blocksVelocity += stepVelocity;
+        tabBlocks.forEach(function (block) {
+            block.setVelocityY(blocksVelocity);
+        });
     }
     function createAnims(scene) {
         scene.anims.create({
@@ -318,4 +349,4 @@
             repeat: -1
         });
     }
-})();
+});
