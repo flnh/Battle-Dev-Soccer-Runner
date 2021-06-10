@@ -22,7 +22,7 @@ class GameController extends AbstractController
         ]);
     }
     /**
-     * @Route("/form", name="game")
+     * @Route("/form", name="form")
      */
     public function form(Request $request, EntityManagerInterface $entityManager, \Swift_Mailer $mailer): Response
     {
