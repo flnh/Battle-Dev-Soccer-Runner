@@ -7,16 +7,32 @@
     <div id="container" style="overflow:hidden;width:100%;height:100%;display:none;"></div>
 
     <div class="main">
-        <div>
-            <img src="/assets-home/soccer_runner_detourage.png" />
+        <div class="container-lg">
+            <img src="../assets-home/theme.png" alt="theme"  class="img-fluid mb-4 theme">
+            <button onclick="document.querySelector('#container').style.display = 'block'" class="btn-play">
+            Jouer 
+            </button>
+            <button  class="btn-reglement" data-bs-toggle="modal" data-bs-target="#modalReglement">
+            Reglement 
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="modalReglement" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" >
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Règlement du jeu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="../assets-home/concours.png" alt="logo-marque" class="img-fluid mb-4" style="display: block; margin-left: auto; margin-right: auto;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+                </div>
+            </div>
+            </div>
         </div>
-        <div>
-            <img src="/assets-home/uefa-logo-euro.png" />
-        </div>
-        <button onclick="document.querySelector('#container').style.display = 'block'" class="btn btn-primary">
-        Jouer !
-        </button>
-    
     </div>
 
     <script src="./js/phaser.min.js"></script>
