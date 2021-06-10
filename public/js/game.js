@@ -22,6 +22,7 @@ var _a;
     var score;
     var scoreText;
     var gameIsFinnished;
+    var intervalId;
     var config = {
         type: Phaser.AUTO,
         scale: {
@@ -97,7 +98,7 @@ var _a;
         spawnSpectators(this, startBlock, true);
         createNextBlock(this);
         supp1.play({ loop: true, volume: 0.3 });
-        setInterval(function () {
+        intervalId = setInterval(function () {
             incrementScore();
             incrementVelocity();
         }, 500);
@@ -255,16 +256,24 @@ var _a;
                 break;
             case 'red_card':
                 sifflet.play();
-                gameIsFinnished = true;
+                endGame();
                 break;
             case 'red_cup_broken':
                 sifflet.play();
-                gameIsFinnished = true;
+                endGame();
                 break;
         }
         player.y = 550;
         hit.destroy(true);
-        // console.log('bonus')
+    }
+    function endGame() {
+        gameIsFinnished = true;
+        clearInterval(intervalId);
+        // @ts-ignore
+        var modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+        // @ts-ignore
+        modal.show();
+        game.destroy(true, true);
     }
     function incrementScore() {
         if (!gameIsFinnished) {

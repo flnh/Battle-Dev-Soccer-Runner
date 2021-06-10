@@ -15,16 +15,7 @@ class GameController extends AbstractController
     /**
      * @Route("/", name="game")
      */
-    public function index(): Response
-    {
-        return $this->render('game/index.html.twig', [
-            'controller_name' => 'GameController',
-        ]);
-    }
-    /**
-     * @Route("/form", name="form")
-     */
-    public function form(Request $request, EntityManagerInterface $entityManager, \Swift_Mailer $mailer): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, \Swift_Mailer $mailer): Response
     {
         $target = new Target();
         
@@ -54,7 +45,7 @@ class GameController extends AbstractController
             // dump($message);
         }
 
-        return $this->render('game/form.html.twig', [
+        return $this->render('game/index.html.twig', [
             'form' => $form->createView()
         ]);
     }

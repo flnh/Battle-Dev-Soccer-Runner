@@ -27,6 +27,7 @@ document.querySelector('.btn-play')?.addEventListener('click', () => {
   let scoreText: Phaser.GameObjects.Text
 
   let gameIsFinnished: boolean
+  let intervalId: number
 
 
   var config = {
@@ -124,7 +125,7 @@ document.querySelector('.btn-play')?.addEventListener('click', () => {
 
     supp1.play({loop: true, volume: 0.3})
 
-    setInterval(() => {
+    intervalId = setInterval(() => {
       incrementScore()
       incrementVelocity()
     }, 500)
@@ -298,16 +299,25 @@ document.querySelector('.btn-play')?.addEventListener('click', () => {
         break;
       case 'red_card':
         sifflet.play()
-        gameIsFinnished = true
+        endGame()
         break;
       case 'red_cup_broken':
         sifflet.play()
-        gameIsFinnished = true
+        endGame()
         break;
     }
     player.y = 550
     hit.destroy(true)
-    // console.log('bonus')
+  }
+
+  function endGame() {
+    gameIsFinnished = true
+    clearInterval(intervalId)
+    // @ts-ignore
+    let modal = new bootstrap.Modal(document.getElementById('staticBackdrop'))
+    // @ts-ignore
+    modal.show()
+    game.destroy(true, true)
   }
 
   function incrementScore() {
