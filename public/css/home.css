@@ -1,3 +1,63 @@
-.play-btn {
+@font-face {
+    font-family: "Heineken";
+    src: url("../font/Heineken.ttf"),
+   }
+body {
+    font-family: "Heineken";
     margin: auto;
+    background-image: url("https://wallpapercave.com/wp/wp2566029.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.required:after {
+    content:" *";
+    color: red;
+  }
+
+.theme {
+    margin-top: 2vw;
+    box-shadow: 10px 5px 5px black;
+  }
+
+.btn-play {
+    position: absolute;
+    font-family: "Heineken";
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #267F00;
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.btn-reglement {
+    position: absolute;
+    font-family: "Heineken";
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #267F00;
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.container-lg{
+    position: relative;
+    width: 100%;
+}
+.container-lg img{
+    width: 100%;
+     height: auto; 
 }

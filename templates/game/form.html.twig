@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Modal
+</button>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Jeu concours</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success">
+            {{ message }}
+          </div>
+        {% endfor %}
+        {{ form_start(form) }}
+        <div>
+        <img src="../assets-home/concours.png" alt="logo-marque" class="img-fluid mb-4" style="display: block; margin-left: auto; margin-right: auto;">
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.firstName, 'Prénom') }}
+                {{ form_widget(form.firstName, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.lastName, 'Nom') }}
+                {{ form_widget(form.lastName, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.pseudo, 'Pseudo') }}
+                {{ form_widget(form.pseudo, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.age, 'Age') }}
+                {{ form_widget(form.age, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+        </div>
+        <div class="form-outline mb-4">
+          {{ form_label(form.email, 'Adresse email') }}
+          {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="form-outline mb-4">
+          {{ form_label(form.hobbies, 'Interêt') }}
+          {{ form_widget(form.hobbies, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.sex, 'Sexe') }}
+                {{ form_widget(form.sex, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline">
+                {{ form_label(form.familyComposition, 'Famille') }}
+                {{ form_widget(form.familyComposition, { 'attr': {'class': 'form-control'} }) }}
+              </div>
+            </div>
+        </div>
+        <div class="form-check required">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+          <label class="form-check-label" for="flexCheckChecked">
+            <a href=""  data-bs-toggle="modal" data-bs-target="#exampleModal">J'accepte les conditions d'utilisation</a>
+          </label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+        {{ form_end(form) }} 
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal GCU -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">Condition générales d'utilisation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi et, aperiam recusandae voluptatem culpa, tempore, doloremque minus explicabo fuga repellat eligendi illum alias vitae? Et eaque quos eligendi quisquam ipsam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat dolores assumenda perferendis, neque earum molestiae ipsum numquam. Cupiditate, incidunt? Nesciunt corporis delectus recusandae quam id dolores et harum dicta enim? Lorem ipsum dolor sit amet consectetur adipisicing elit. A eum nam aliquam voluptatem veniam. Voluptas nisi, quia ab assumenda magnam vitae voluptatem nemo, repellat, molestias doloremque amet saepe velit illo?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
