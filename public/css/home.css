@@ -3,3 +3,7 @@ body {
     background-image: url("https://wallpapercave.com/wp/wp2566029.jpg");
 }
 
+.required:after {
+    content:" *";
+    color: red;
+  }
