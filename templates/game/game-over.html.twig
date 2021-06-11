@@ -7,7 +7,8 @@
          {{ message }}
      </div>
      {% endfor %}
-     <img src="/assets-home/render_gameover.png" alt="game_over" class="img-fluid">
+     <img src="/assets-home/render_gameover.png" alt="game_over/" class="img-fluid gameover">
+     <button class="btn-replay"> <a href="{{ path('game') }}"> Rejouer </a></button>
  </div>
 
  {% endblock %}

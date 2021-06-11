@@ -29,6 +29,7 @@ document.querySelector('.btn-play')?.addEventListener('click', () => {
   let gameIsFinnished: boolean
   let intervalId: number
 
+  
 
   var config = {
     type: Phaser.AUTO,
@@ -78,6 +79,9 @@ document.querySelector('.btn-play')?.addEventListener('click', () => {
       frameWidth: 72,
       frameHeight: 92
     })
+
+   // this.load.image('left_button', '/assets/left_button.png')
+   // this.load.image('right_button', '/assets/right_button.png')
 
 
     this.load.audio('biere', '/assets/sounds/biere.wav');
@@ -132,24 +136,26 @@ document.querySelector('.btn-play')?.addEventListener('click', () => {
   }
   
   function update(this: Phaser.Scene) {
-    if (keyboard.left.isDown && player.x >= widthGame / 2 - 110) {
-      player.setVelocityX(-160)
-      player.anims.play('left', true)
-    } else if (keyboard.right.isDown && player.x <= widthGame / 2 + 110) {
-      player.setVelocityX(160)
-      player.anims.play('right', true)
-    } else {
-      player.setVelocityX(0)
-      player.anims.play('run', true)
-    }
+    if (!gameIsFinnished) {
+      if (keyboard.left.isDown && player.x >= widthGame / 2 - 110) {
+        player.setVelocityX(-160)
+        player.anims.play('left', true)
+      } else if (keyboard.right.isDown && player.x <= widthGame / 2 + 110) {
+        player.setVelocityX(160)
+        player.anims.play('right', true)
+      } else {
+        player.setVelocityX(0)
+        player.anims.play('run', true)
+      }
+    
+      if (player.y < 550) {
+        player.setVelocityY(blocksVelocity / 2 )
+      } else {
+        player.setVelocityY(0)
+      }
   
-    if (player.y < 550) {
-      player.setVelocityY(blocksVelocity / 2 )
-    } else {
-      player.setVelocityY(0)
+      verifyBlocks(this)
     }
-
-    verifyBlocks(this)
   }
   
   function initializeVariables() {
@@ -313,11 +319,25 @@ document.querySelector('.btn-play')?.addEventListener('click', () => {
   function endGame() {
     gameIsFinnished = true
     clearInterval(intervalId)
+    player.anims.play('died')
+    player.setVelocityY(0)
+    let getDown = setInterval(() => {
+      if (player.rotation < 1.5708) {
+        player.setRotation(player.rotation + 0.6)
+      } else {
+        clearInterval(getDown)
+      }
+    }, 100)
     // @ts-ignore
     let modal = new bootstrap.Modal(document.getElementById('staticBackdrop'))
     // @ts-ignore
-    modal.show()
-    game.destroy(true, true)
+    tabBlocks.forEach((block) => {
+      block.setVelocityY(0)
+    })
+    setInterval(() => {
+      modal.show()
+      game.destroy(true, true)
+    }, 1000)
   }
 
   function incrementScore() {
