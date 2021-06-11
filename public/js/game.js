@@ -134,7 +134,7 @@ var _a;
         score = 0;
         gameIsFinnished = false;
         stepIsAugmented = false;
-        stepVelocity = 1;
+        stepVelocity = 2;
     }
     function loadSound(scene) {
         biere = scene.sound.add('biere');
@@ -279,7 +279,7 @@ var _a;
         if (!gameIsFinnished) {
             scoreText.setText('Score: ' + ++score);
             if (!stepIsAugmented && score >= 75) {
-                stepVelocity = 5;
+                stepVelocity = 6;
                 stepIsAugmented = true;
             }
         }
