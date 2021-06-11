@@ -1,5 +1,7 @@
  {% extends 'base.html.twig' %}
 
+ {% block title %}Game Over !{% endblock %}
+
  {% block body %}
  <div class="container">
      {% for message in app.flashes('success') %}
