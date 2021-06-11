@@ -68,6 +68,8 @@ var _a;
             frameWidth: 72,
             frameHeight: 92
         });
+        // this.load.image('left_button', '/assets/left_button.png')
+        // this.load.image('right_button', '/assets/right_button.png')
         this.load.audio('biere', '/assets/sounds/biere.wav');
         this.load.audio('bonus', '/assets/sounds/bonus.wav');
         this.load.audio('bonus2', '/assets/sounds/bonus2.wav');
@@ -104,25 +106,27 @@ var _a;
         }, 500);
     }
     function update() {
-        if (keyboard.left.isDown && player.x >= widthGame / 2 - 110) {
-            player.setVelocityX(-160);
-            player.anims.play('left', true);
+        if (!gameIsFinnished) {
+            if (keyboard.left.isDown && player.x >= widthGame / 2 - 110) {
+                player.setVelocityX(-160);
+                player.anims.play('left', true);
+            }
+            else if (keyboard.right.isDown && player.x <= widthGame / 2 + 110) {
+                player.setVelocityX(160);
+                player.anims.play('right', true);
+            }
+            else {
+                player.setVelocityX(0);
+                player.anims.play('run', true);
+            }
+            if (player.y < 550) {
+                player.setVelocityY(blocksVelocity / 2);
+            }
+            else {
+                player.setVelocityY(0);
+            }
+            verifyBlocks(this);
         }
-        else if (keyboard.right.isDown && player.x <= widthGame / 2 + 110) {
-            player.setVelocityX(160);
-            player.anims.play('right', true);
-        }
-        else {
-            player.setVelocityX(0);
-            player.anims.play('run', true);
-        }
-        if (player.y < 550) {
-            player.setVelocityY(blocksVelocity / 2);
-        }
-        else {
-            player.setVelocityY(0);
-        }
-        verifyBlocks(this);
     }
     function initializeVariables() {
         widthGame = config.scale.width;
@@ -134,7 +138,7 @@ var _a;
         score = 0;
         gameIsFinnished = false;
         stepIsAugmented = false;
-        stepVelocity = 1;
+        stepVelocity = 2;
     }
     function loadSound(scene) {
         biere = scene.sound.add('biere');
@@ -269,17 +273,32 @@ var _a;
     function endGame() {
         gameIsFinnished = true;
         clearInterval(intervalId);
+        player.anims.play('died');
+        player.setVelocityY(0);
+        var getDown = setInterval(function () {
+            if (player.rotation < 1.5708) {
+                player.setRotation(player.rotation + 0.6);
+            }
+            else {
+                clearInterval(getDown);
+            }
+        }, 100);
         // @ts-ignore
         var modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
         // @ts-ignore
-        modal.show();
-        game.destroy(true, true);
+        tabBlocks.forEach(function (block) {
+            block.setVelocityY(0);
+        });
+        setInterval(function () {
+            modal.show();
+            game.destroy(true, true);
+        }, 1000);
     }
     function incrementScore() {
         if (!gameIsFinnished) {
             scoreText.setText('Score: ' + ++score);
             if (!stepIsAugmented && score >= 75) {
-                stepVelocity = 5;
+                stepVelocity = 6;
                 stepIsAugmented = true;
             }
         }
